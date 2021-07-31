@@ -1,7 +1,16 @@
 import React from "react";
 import Bookshelf from "./Bookshelf.js";
 
+/**
+ * @component Dashboard
+ * @description Renders a Dashboard component
+ * @param {Object}  props
+ * @param {Array} props.books - The books of the bookshelf
+ * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
+ **/
+
 const Dashboard = props => {
+  const { books, handleUpdate } = props;
   const titles = {
     currentlyReading: {
       title: "Currently Reading"
@@ -13,7 +22,6 @@ const Dashboard = props => {
       title: "Read"
     }
   };
-  const { books, handleUpdate } = props;
   return (
     <div className="list-books">
       <div className="list-books-title">

@@ -2,28 +2,43 @@ import React from "react";
 import "./App.css";
 import Dashboard from "./Dashboard.js";
 import SearchBook from "./SearchBook.js";
-import AddBook from "./AddBook.js";
-import * as BooksAPI from "./BooksAPI";
+import ToggleSearchPage from "./ToggleSearchPage.js";
+import { getAll, update } from "./BooksAPI";
+
+/**
+ * @component BooksApp
+ * @description Renders the main component of the app, BooksApp
+ **/
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
     showSearchPage: false,
     books: []
   };
+
+  /**
+   * @memberof BooksApp
+   * @method toggleSearchPage
+   * @description Toggle search page
+   **/
+
   toggleSearchPage = () => {
     this.setState(currentState => ({
       showSearchPage: !currentState.showSearchPage
     }));
   };
+
+  /**
+   * @memberof BooksApp
+   * @method handleUpdate
+   * @description Update the shelf of a book in the state of this component and in the backend server
+   * @param {Object} book - The book (containing at minimum an id attribute)
+   * @param {string} shelf - The new shelf for the book (contains one of ["wantToRead", "currentlyReading", "read"])
+   **/
+
   handleUpdate = (book, shelf) => {
     // Handle update of the shelf property of a book passed in argument with the backend server
-    BooksAPI.update(book, shelf).then(response => {
+    update(book, shelf).then(response => {
       // When the promise is resolved, update the shelf property of the book passed in argument
       book.shelf = shelf;
       // Update the book in the books state
@@ -32,9 +47,10 @@ class BooksApp extends React.Component {
       }));
     });
   };
+
   componentDidMount() {
     // Load books from the backend server and store them to the state in an array called books
-    BooksAPI.getAll().then(books => {
+    getAll().then(books => {
       this.setState(() => ({
         books
       }));
@@ -45,7 +61,7 @@ class BooksApp extends React.Component {
       <div className="app">
         {this.state.showSearchPage ? (
           <SearchBook
-            handleOnClick={this.toggleSearchPage}
+            handleClick={this.toggleSearchPage}
             handleUpdate={this.handleUpdate}
           />
         ) : (
@@ -55,7 +71,7 @@ class BooksApp extends React.Component {
               handleUpdate={this.handleUpdate}
             />
 
-            <AddBook handleOnClick={this.toggleSearchPage} />
+            <ToggleSearchPage handleClick={this.toggleSearchPage} />
           </>
         )}
       </div>

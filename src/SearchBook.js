@@ -1,35 +1,43 @@
 import React, { Component } from "react";
 import Book from "./Book.js";
-import * as BooksAPI from "./BooksAPI";
+import { search } from "./BooksAPI";
+
+/**
+ * @component
+ * @description Renders a SearchBook component
+ * @param {Object}  props
+ * @param {function} props.handleClick - Handle the call of toggleSearchPage in App.js
+ * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
+ **/
 
 class SearchBook extends Component {
   state = {
     result: []
   };
+
+  /**
+   * @memberof SearchBook
+   * @method updateQuery
+   * @description Fetch the books found by the query and store them in the state
+   * @param {string} query - The title or the author of the book(s) searched
+   **/
+
   updateQuery = query => {
-    BooksAPI.search(query).then(books =>
+    search(query).then(books =>
       this.setState({
         result: books
       })
     );
   };
   render() {
-    const { handleOnClick, handleUpdate } = this.props;
+    const { handleClick, handleUpdate } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <button className="close-search" onClick={handleOnClick}>
+          <button className="close-search" onClick={handleClick}>
             Close
           </button>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               placeholder="Search by title or author"

@@ -1,6 +1,14 @@
 import React from "react";
 import UpdateBook from "./UpdateBook.js";
 
+/**
+ * @component Book
+ * @description Renders a Book component
+ * @param {Object}  props
+ * @param {Object} props.book - The book
+ * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
+ **/
+
 const Book = props => {
   const { book, handleUpdate } = props;
   return (
