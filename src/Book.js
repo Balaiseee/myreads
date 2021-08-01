@@ -19,7 +19,7 @@ const Book = props => {
           style={{
             width: 128,
             height: 188,
-            backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+            backgroundImage: `url(${book.imageLinks.thumbnail})`
           }}
         />
         <UpdateBook book={book} handleUpdate={handleUpdate} />

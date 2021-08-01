@@ -4,7 +4,7 @@ import "./App.css";
 import Dashboard from "./Dashboard.js";
 import SearchBook from "./SearchBook.js";
 import ToggleSearchPage from "./ToggleSearchPage.js";
-import { getAll, update } from "./BooksAPI";
+import { getAll, update, search } from "./BooksAPI";
 
 /**
  * @component BooksApp
@@ -13,7 +13,8 @@ import { getAll, update } from "./BooksAPI";
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    result: []
   };
 
   /**
@@ -36,6 +37,32 @@ class BooksApp extends React.Component {
     });
   };
 
+  /**
+   * @memberof BooksApp
+   * @method handleSearch
+   * @description Fetch the books found by the query and store them in the state
+   * @param {string} query - The title or the author of the book(s) searched
+   **/
+
+  handleSearch = query => {
+    search(query).then(books =>
+      this.setState(currentState => ({
+        result: books
+      }))
+    );
+  };
+
+  /**
+   * @memberof BooksApp
+   * @method emptySearch
+   * @description Empty the current result of the search in the state
+   **/
+
+  emptySearch = () => {
+    this.setState(currentState => ({
+      result: []
+    }));
+  };
   componentDidMount() {
     // Load books from the backend server and store them to the state in an array called books
     getAll().then(books => {
@@ -44,27 +71,23 @@ class BooksApp extends React.Component {
       }));
     });
   }
+
   render() {
     return (
       <div className="app">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <>
-              <Dashboard
-                books={this.state.books}
-                handleUpdate={this.handleUpdate}
-              />
-              <ToggleSearchPage />
-            </>
-          )}
-        />
-        <Route
-          exact
-          path="/search"
-          render={() => <SearchBook handleUpdate={this.handleUpdate} />}
-        />
+        <Route exact path="/">
+          <Dashboard books={this.state.books} handleUpdate={this.handleUpdate} />
+          <ToggleSearchPage />
+        </Route>
+        <Route exact path="/search">
+          <SearchBook
+            handleUpdate={this.handleUpdate}
+            handleSearch={this.handleSearch}
+            emptySearch={this.emptySearch}
+            result={this.state.result}
+            books={this.state.books}
+          />
+        </Route>
       </div>
     );
   }

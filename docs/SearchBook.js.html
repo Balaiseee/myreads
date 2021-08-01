@@ -85,39 +85,54 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from "react";
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import { Link } from "react-router-dom";
 import Book from "./Book.js";
-import { search } from "./BooksAPI";
 
 /**
  * @component
  * @description Renders a SearchBook component
  * @param {Object}  props
  * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
+ * @param {function} props.handleSearch - Handle the call of handleSearch in App.js
+ * @param {Array} props.result - The array of Book Object containing the result of the search
+ * @param {Array} props.books - The array of Book Object containing the books in the bookshelf
  **/
 
-class SearchBook extends Component {
-  state = {
-    result: []
-  };
-
-  /**
-   * @memberof SearchBook
-   * @method updateQuery
-   * @description Fetch the books found by the query and store them in the state
-   * @param {string} query - The title or the author of the book(s) searched
-   **/
-
-  updateQuery = query => {
-    search(query).then(books =>
-      this.setState({
-        result: books
-      })
-    );
-  };
+class SearchBook extends React.Component {
+  componentWillMount() {
+    this.props.emptySearch();
+  }
   render() {
-    const { handleUpdate } = this.props;
+    const { handleUpdate, handleSearch, result, books } = this.props;
+    const sanitizeResult = () => {
+      // Check if result exist and if the result is successful
+      if (result !== undefined &amp;&amp; !("error" in result)) {
+        // Intersection between books and result
+        const intersectionBooksResult = books.filter(b => result.some(book => book.id === b.id));
+        // Intersection between result and intersectionBooksResult
+        const resultWithoutIntersectionBooksResult = result.filter(book => intersectionBooksResult.every(b => b.id !== book.id));
+        // Insert books already in bookshelf at the beginning of b
+        resultWithoutIntersectionBooksResult.unshift(...intersectionBooksResult);
+        return resultWithoutIntersectionBooksResult;
+      } else {
+        return [];
+      }
+    };
+    const sanitizeBook = book => {
+      // Check if authors and imageLinks exist
+      if (book.imageLinks !== undefined) {
+        if (book.authors === undefined) {
+          book.authors = ["Unknown"];
+        }
+        // Check if book has it own shelf property
+        if (book.hasOwnProperty("shelf")) {
+          return &lt;Book book={book} handleUpdate={handleUpdate} />;
+        } else {
+          return &lt;Book book={Object.assign({}, book, { shelf: "none" })} handleUpdate={handleUpdate} />;
+        }
+      }
+    };
     return (
       &lt;div className="search-books">
         &lt;div className="search-books-bar">
@@ -125,30 +140,14 @@ class SearchBook extends Component {
             &lt;button className="close-search">Close&lt;/button>
           &lt;/Link>
           &lt;div className="search-books-input-wrapper">
-            &lt;input
-              type="text"
-              placeholder="Search by title or author"
-              onChange={event => this.updateQuery(event.target.value)}
-            />
+            &lt;input type="text" placeholder="Search by title or author" onChange={event => handleSearch(event.target.value)} />
           &lt;/div>
         &lt;/div>
         &lt;div className="search-books-results">
           &lt;ol className="books-grid">
-            {/* Check if result exist and if the result is successful if so map result into books found*/}
-            {this.state.result !== undefined &amp;&amp;
-              !("error" in this.state.result) &amp;&amp;
-              this.state.result.map(book => (
-                &lt;li key={book.id}>
-                  {/* Check if authors and imageLinks exist if so call Book component with an object that add a new property shelter on book that is passed in argument*/}
-                  {book.authors !== undefined &amp;&amp;
-                    book.imageLinks !== undefined &amp;&amp; (
-                      &lt;Book
-                        book={Object.assign({}, book, { shelf: "none" })}
-                        handleUpdate={handleUpdate}
-                      />
-                    )}
-                &lt;/li>
-              ))}
+            {sanitizeResult().map(book => (
+              &lt;li key={book.id}>{sanitizeBook(book)}&lt;/li>
+            ))}
           &lt;/ol>
         &lt;/div>
       &lt;/div>

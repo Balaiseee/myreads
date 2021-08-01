@@ -39,11 +39,7 @@ const Dashboard = props => {
             books={books.filter(book => book.shelf === "wantToRead")}
             handleUpdate={handleUpdate}
           />
-          <Bookshelf
-            title={titles.read.title}
-            books={books.filter(book => book.shelf === "read")}
-            handleUpdate={handleUpdate}
-          />
+          <Bookshelf title={titles.read.title} books={books.filter(book => book.shelf === "read")} handleUpdate={handleUpdate} />
         </div>
       </div>
     </div>
