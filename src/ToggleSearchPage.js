@@ -1,18 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 /**
  * @component ToggleSearchPage
  * @description Renders a ToggleSearchPage component
- * @param {Object}  props
- * @param {function} props.handleClick - Handle the call of toggleSearchPage in App.js
  **/
 
-const ToggleSearchPage = props => {
-  const { handleClick } = props;
+const ToggleSearchPage = () => {
   return (
-    <div className="open-search">
-      <button onClick={handleClick}>Add a book</button>
-    </div>
+    <Link to="/search">
+      <div className="open-search">
+        <button>Add a book</button>
+      </div>
+    </Link>
   );
 };
 export default ToggleSearchPage;

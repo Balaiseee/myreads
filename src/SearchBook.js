@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Book from "./Book.js";
 import { search } from "./BooksAPI";
 
@@ -6,7 +7,6 @@ import { search } from "./BooksAPI";
  * @component
  * @description Renders a SearchBook component
  * @param {Object}  props
- * @param {function} props.handleClick - Handle the call of toggleSearchPage in App.js
  * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
  **/
 
@@ -30,13 +30,13 @@ class SearchBook extends Component {
     );
   };
   render() {
-    const { handleClick, handleUpdate } = this.props;
+    const { handleUpdate } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <button className="close-search" onClick={handleClick}>
-            Close
-          </button>
+          <Link to="/">
+            <button className="close-search">Close</button>
+          </Link>
           <div className="search-books-input-wrapper">
             <input
               type="text"

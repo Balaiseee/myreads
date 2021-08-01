@@ -86,20 +86,20 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
+import { Link } from "react-router-dom";
 
 /**
  * @component ToggleSearchPage
  * @description Renders a ToggleSearchPage component
- * @param {Object}  props
- * @param {function} props.handleClick - Handle the call of toggleSearchPage in App.js
  **/
 
-const ToggleSearchPage = props => {
-  const { handleClick } = props;
+const ToggleSearchPage = () => {
   return (
-    &lt;div className="open-search">
-      &lt;button onClick={handleClick}>Add a book&lt;/button>
-    &lt;/div>
+    &lt;Link to="/search">
+      &lt;div className="open-search">
+        &lt;button>Add a book&lt;/button>
+      &lt;/div>
+    &lt;/Link>
   );
 };
 export default ToggleSearchPage;

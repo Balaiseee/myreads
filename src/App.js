@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./Dashboard.js";
 import SearchBook from "./SearchBook.js";
@@ -12,20 +13,7 @@ import { getAll, update } from "./BooksAPI";
 
 class BooksApp extends React.Component {
   state = {
-    showSearchPage: false,
     books: []
-  };
-
-  /**
-   * @memberof BooksApp
-   * @method toggleSearchPage
-   * @description Toggle search page
-   **/
-
-  toggleSearchPage = () => {
-    this.setState(currentState => ({
-      showSearchPage: !currentState.showSearchPage
-    }));
   };
 
   /**
@@ -59,21 +47,24 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchBook
-            handleClick={this.toggleSearchPage}
-            handleUpdate={this.handleUpdate}
-          />
-        ) : (
-          <>
-            <Dashboard
-              books={this.state.books}
-              handleUpdate={this.handleUpdate}
-            />
-
-            <ToggleSearchPage handleClick={this.toggleSearchPage} />
-          </>
-        )}
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <>
+              <Dashboard
+                books={this.state.books}
+                handleUpdate={this.handleUpdate}
+              />
+              <ToggleSearchPage />
+            </>
+          )}
+        />
+        <Route
+          exact
+          path="/search"
+          render={() => <SearchBook handleUpdate={this.handleUpdate} />}
+        />
       </div>
     );
   }
