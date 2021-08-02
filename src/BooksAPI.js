@@ -30,24 +30,6 @@ export const getAll = () =>
 
 /**
  * @category API
- * @function update
- * @param {Object} book - The book (containing at minimum an id attribute)
- * @param {string} shelf - The new shelf for the book (contains one of ["wantToRead", "currentlyReading", "read"])
- * @return {Promise} Returns a Promise which resolves to a JSON object containing the response data of the POST request
- **/
-
-export const update = (book, shelf) =>
-  fetch(`${api}/books/${book.id}`, {
-    method: "PUT",
-    headers: {
-      ...headers,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ shelf })
-  }).then(res => res.json());
-
-/**
- * @category API
  * @function search
  * @param {string} query - The title or the author of the book searched
  * @return {Promise} Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects. These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
@@ -64,3 +46,21 @@ export const search = query =>
   })
     .then(res => res.json())
     .then(data => data.books);
+
+/**
+ * @category API
+ * @function update
+ * @param {Object} book - The book (containing at minimum an id attribute)
+ * @param {string} shelf - The new shelf for the book (contains one of ["wantToRead", "currentlyReading", "read"])
+ * @return {Promise} Returns a Promise which resolves to a JSON object containing the response data of the POST request
+ **/
+
+export const update = (book, shelf) =>
+  fetch(`${api}/books/${book.id}`, {
+    method: "PUT",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ shelf })
+  }).then(res => res.json());

@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="Book.html">Book</a></li><li><a href="BooksApp.html">BooksApp</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Book.html">Book</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
                 
             </nav>
         </div>
@@ -87,13 +87,11 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
 import UpdateBook from "./UpdateBook.js";
+import PropTypes from "prop-types";
 
 /**
  * @component Book
  * @description Renders a Book component
- * @param {Object}  props
- * @param {Object} props.book - The book
- * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
  **/
 
 const Book = props => {
@@ -116,6 +114,12 @@ const Book = props => {
     &lt;/div>
   );
 };
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  handleUpdate: PropTypes.func.isRequired
+};
+
 export default Book;
 </code></pre>
         </article>

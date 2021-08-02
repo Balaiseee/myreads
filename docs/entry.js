@@ -22,11 +22,11 @@
 
     import './styles/iframe.css';
 
-  import Component0 from '../src/Book.js';
-reactComponents['Book'] = Component0;
+  import Component0 from '../src/App.js';
+reactComponents['App'] = Component0;
 
-import Component1 from '../src/App.js';
-reactComponents['BooksApp'] = Component1;
+import Component1 from '../src/Book.js';
+reactComponents['Book'] = Component1;
 
 import Component2 from '../src/Bookshelf.js';
 reactComponents['Bookshelf'] = Component2;

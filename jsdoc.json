@@ -13,8 +13,5 @@
   "tags": {
     "allowUnknownTags": ["component", "category"]
   },
-  "plugins": [
-    "node_modules/better-docs/component",
-    "node_modules/better-docs/category"
-  ]
+  "plugins": ["node_modules/better-docs/component", "node_modules/better-docs/category"]
 }

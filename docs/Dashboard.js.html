@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="Book.html">Book</a></li><li><a href="BooksApp.html">BooksApp</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Book.html">Book</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
                 
             </nav>
         </div>
@@ -87,20 +87,18 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
 import Bookshelf from "./Bookshelf.js";
+import PropTypes from "prop-types";
 
 /**
  * @component Dashboard
  * @description Renders a Dashboard component
- * @param {Object}  props
- * @param {Array} props.books - The books of the bookshelf
- * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
  **/
 
 const Dashboard = props => {
   const { books, handleUpdate } = props;
   const titles = {
     currentlyReading: {
-      title: "Currently Reading"
+      title: "Currently reading"
     },
     wantToRead: {
       title: "Want to read"
@@ -117,20 +115,25 @@ const Dashboard = props => {
       &lt;div className="list-books-content">
         &lt;div>
           &lt;Bookshelf
-            title={titles.currentlyReading.title}
             books={books.filter(book => book.shelf === "currentlyReading")}
+            title={titles.currentlyReading.title}
             handleUpdate={handleUpdate}
           />
           &lt;Bookshelf
-            title={titles.wantToRead.title}
             books={books.filter(book => book.shelf === "wantToRead")}
+            title={titles.wantToRead.title}
             handleUpdate={handleUpdate}
           />
-          &lt;Bookshelf title={titles.read.title} books={books.filter(book => book.shelf === "read")} handleUpdate={handleUpdate} />
+          &lt;Bookshelf books={books.filter(book => book.shelf === "read")} title={titles.read.title} handleUpdate={handleUpdate} />
         &lt;/div>
       &lt;/div>
     &lt;/div>
   );
+};
+
+Dashboard.propTypes = {
+  books: PropTypes.array.isRequired,
+  handleUpdate: PropTypes.func.isRequired
 };
 
 export default Dashboard;

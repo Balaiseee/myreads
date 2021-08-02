@@ -1,12 +1,10 @@
 import React from "react";
 import UpdateBook from "./UpdateBook.js";
+import PropTypes from "prop-types";
 
 /**
  * @component Book
  * @description Renders a Book component
- * @param {Object}  props
- * @param {Object} props.book - The book
- * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
  **/
 
 const Book = props => {
@@ -29,4 +27,10 @@ const Book = props => {
     </div>
   );
 };
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  handleUpdate: PropTypes.func.isRequired
+};
+
 export default Book;

@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="Book.html">Book</a></li><li><a href="BooksApp.html">BooksApp</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Book.html">Book</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
                 
             </nav>
         </div>
@@ -93,16 +93,58 @@ import SearchBook from "./SearchBook.js";
 import ToggleSearchPage from "./ToggleSearchPage.js";
 import { getAll, update, search } from "./BooksAPI";
 
+const debounce = require("lodash/debounce");
+
 /**
  * @component BooksApp
- * @description Renders the main component of the app, BooksApp
+ * @description Renders the main component of the app
  **/
 
-class BooksApp extends React.Component {
+class App extends React.Component {
   state = {
     books: [],
-    result: []
+    results: []
   };
+
+  /**
+   * @memberof BooksApp
+   * @method emptySearch
+   * @description Empty the current result of the search in the state
+   **/
+
+  emptySearch = () => {
+    this.setState(() => ({
+      result: []
+    }));
+  };
+
+  /**
+   * @memberof BooksApp
+   * @method handleSearch
+   * @description Fetch the books found by the query and store them in the state
+   * @param {string} query - The title or the author of the book(s) searched
+   **/
+
+  handleSearch = (query = "") => {
+    if (query.trim() !== "") {
+      search(query).then(books =>
+        this.setState(currentState => ({
+          result: books
+        }))
+      );
+    } else {
+      this.emptySearch();
+    }
+  };
+
+  /**
+   * @memberof BooksApp
+   * @method handleSearchDebounced
+   * @description Fetch the books found by the query and store them in the state (wait 250ms between each call)
+   * @param {string} query - The title or the author of the book(s) searched
+   **/
+
+  handleSearchDebounced = debounce(query => this.handleSearch(query), 250);
 
   /**
    * @memberof BooksApp
@@ -124,32 +166,6 @@ class BooksApp extends React.Component {
     });
   };
 
-  /**
-   * @memberof BooksApp
-   * @method handleSearch
-   * @description Fetch the books found by the query and store them in the state
-   * @param {string} query - The title or the author of the book(s) searched
-   **/
-
-  handleSearch = query => {
-    search(query).then(books =>
-      this.setState(currentState => ({
-        result: books
-      }))
-    );
-  };
-
-  /**
-   * @memberof BooksApp
-   * @method emptySearch
-   * @description Empty the current result of the search in the state
-   **/
-
-  emptySearch = () => {
-    this.setState(currentState => ({
-      result: []
-    }));
-  };
   componentDidMount() {
     // Load books from the backend server and store them to the state in an array called books
     getAll().then(books => {
@@ -168,11 +184,11 @@ class BooksApp extends React.Component {
         &lt;/Route>
         &lt;Route exact path="/search">
           &lt;SearchBook
-            handleUpdate={this.handleUpdate}
-            handleSearch={this.handleSearch}
-            emptySearch={this.emptySearch}
-            result={this.state.result}
             books={this.state.books}
+            result={this.state.result}
+            emptySearch={this.emptySearch}
+            handleSearch={this.handleSearchDebounced}
+            handleUpdate={this.handleUpdate}
           />
         &lt;/Route>
       &lt;/div>
@@ -180,7 +196,7 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp;
+export default App;
 </code></pre>
         </article>
     </section>

@@ -6,16 +6,58 @@ import SearchBook from "./SearchBook.js";
 import ToggleSearchPage from "./ToggleSearchPage.js";
 import { getAll, update, search } from "./BooksAPI";
 
+const debounce = require("lodash/debounce");
+
 /**
  * @component BooksApp
- * @description Renders the main component of the app, BooksApp
+ * @description Renders the main component of the app
  **/
 
-class BooksApp extends React.Component {
+class App extends React.Component {
   state = {
     books: [],
-    result: []
+    results: []
   };
+
+  /**
+   * @memberof BooksApp
+   * @method emptySearch
+   * @description Empty the current result of the search in the state
+   **/
+
+  emptySearch = () => {
+    this.setState(() => ({
+      result: []
+    }));
+  };
+
+  /**
+   * @memberof BooksApp
+   * @method handleSearch
+   * @description Fetch the books found by the query and store them in the state
+   * @param {string} query - The title or the author of the book(s) searched
+   **/
+
+  handleSearch = (query = "") => {
+    if (query.trim() !== "") {
+      search(query).then(books =>
+        this.setState(currentState => ({
+          result: books
+        }))
+      );
+    } else {
+      this.emptySearch();
+    }
+  };
+
+  /**
+   * @memberof BooksApp
+   * @method handleSearchDebounced
+   * @description Fetch the books found by the query and store them in the state (wait 250ms between each call)
+   * @param {string} query - The title or the author of the book(s) searched
+   **/
+
+  handleSearchDebounced = debounce(query => this.handleSearch(query), 250);
 
   /**
    * @memberof BooksApp
@@ -37,32 +79,6 @@ class BooksApp extends React.Component {
     });
   };
 
-  /**
-   * @memberof BooksApp
-   * @method handleSearch
-   * @description Fetch the books found by the query and store them in the state
-   * @param {string} query - The title or the author of the book(s) searched
-   **/
-
-  handleSearch = query => {
-    search(query).then(books =>
-      this.setState(currentState => ({
-        result: books
-      }))
-    );
-  };
-
-  /**
-   * @memberof BooksApp
-   * @method emptySearch
-   * @description Empty the current result of the search in the state
-   **/
-
-  emptySearch = () => {
-    this.setState(currentState => ({
-      result: []
-    }));
-  };
   componentDidMount() {
     // Load books from the backend server and store them to the state in an array called books
     getAll().then(books => {
@@ -81,11 +97,11 @@ class BooksApp extends React.Component {
         </Route>
         <Route exact path="/search">
           <SearchBook
-            handleUpdate={this.handleUpdate}
-            handleSearch={this.handleSearch}
-            emptySearch={this.emptySearch}
-            result={this.state.result}
             books={this.state.books}
+            result={this.state.result}
+            emptySearch={this.emptySearch}
+            handleSearch={this.handleSearchDebounced}
+            handleUpdate={this.handleUpdate}
           />
         </Route>
       </div>
@@ -93,4 +109,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp;
+export default App;

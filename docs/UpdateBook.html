@@ -66,7 +66,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="Book.html">Book</a></li><li><a href="BooksApp.html">BooksApp</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Book.html">Book</a></li><li><a href="Bookshelf.html">Bookshelf</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="SearchBook.html">SearchBook</a></li><li><a href="ToggleSearchPage.html">ToggleSearchPage</a></li><li><a href="UpdateBook.html">UpdateBook</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#update">update</a></li></ul></div>
                 
             </nav>
         </div>
@@ -86,7 +86,7 @@
 <header>
     
         <h2>
-            &ltUpdateBook  /&gt
+            &ltUpdateBook <i>book</i> <i>handleUpdate</i> /&gt
         </h2>
         
     
@@ -111,7 +111,7 @@
         
         <span class="code-name">
             
-                &ltUpdateBook  /&gt
+                &ltUpdateBook <i>book</i> <i>handleUpdate</i> /&gt
             
         </span>
     </h4>
@@ -131,108 +131,50 @@
 
 
     
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>PropTypes:</h5>
+        
 <div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
+  <table class="params table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th class="last">Default</th>
+    </tr>
+    </thead>
 
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>props</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-  
-  
+    <tbody>
     
-<tr class="deep-level-1">
-  
-      <td class="name"><code>book</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The book</td>
-</tr>
-
-  
+          <tr class="deep-level-0">
+            <td class="name"><code>book</code></td>
+            <td>
+              object
+            </td>
+            <td>Yes</td>
+            <td></td>
+            <td></td>
+          </tr>
+          
     
-<tr class="deep-level-1">
-  
-      <td class="name"><code>handleUpdate</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Handle the call of handleUpdate in App.js</td>
-</tr>
-
-  
-
-
-        
-        </tbody>
-    </table>
+          <tr class="deep-level-0">
+            <td class="name"><code>handleUpdate</code></td>
+            <td>
+              func
+            </td>
+            <td>Yes</td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+    
+    </tbody>
+  </table>
 </div>
+    
+
+
 
 
 
@@ -273,7 +215,7 @@
         <p class="tag-source">
             <a href="UpdateBook.js.html" class="button">View Source</a>
             <span>
-                <a href="UpdateBook.js.html">UpdateBook.js</a>, <a href="UpdateBook.js.html#line11">line 11</a>
+                <a href="UpdateBook.js.html">UpdateBook.js</a>, <a href="UpdateBook.js.html#line9">line 9</a>
             </span>
         </p>
     

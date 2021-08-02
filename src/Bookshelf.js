@@ -1,17 +1,14 @@
 import React from "react";
 import Book from "./Book.js";
+import PropTypes from "prop-types";
 
 /**
  * @component Bookshelf
  * @description Renders a Bookshelf component
- * @param {Object}  props
- * @param {string} props.title - The title of the bookshelf
- * @param {Array} props.books - The books of the bookshelf
- * @param {function} props.handleUpdate - Handle the call of handleUpdate in App.js
  **/
 
 const Bookshelf = props => {
-  const { title, books, handleUpdate } = props;
+  const { books, title, handleUpdate } = props;
   const booksList = books.map(book => (
     <li key={book.id}>
       <Book book={book} handleUpdate={handleUpdate} />
@@ -25,6 +22,12 @@ const Bookshelf = props => {
       </div>
     </div>
   );
+};
+
+Bookshelf.propTypes = {
+  books: PropTypes.array.isRequired,
+  title: PropTypes.oneOf(["Want to read", "Currently reading", "Read"]).isRequired,
+  handleUpdate: PropTypes.func.isRequired
 };
 
 export default Bookshelf;
