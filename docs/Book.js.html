@@ -96,6 +96,7 @@ import PropTypes from "prop-types";
 
 const Book = props => {
   const { book, handleUpdate } = props;
+  const authors = book.authors.join(", ");
   return (
     &lt;div className="book">
       &lt;div className="book-top">
@@ -110,7 +111,7 @@ const Book = props => {
         &lt;UpdateBook book={book} handleUpdate={handleUpdate} />
       &lt;/div>
       &lt;div className="book-title">{book.title}&lt;/div>
-      &lt;div className="book-authors">{book.authors[0]}&lt;/div>
+      &lt;div className="book-authors">{authors}&lt;/div>
     &lt;/div>
   );
 };

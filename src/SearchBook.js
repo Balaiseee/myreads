@@ -97,7 +97,7 @@ class SearchBook extends React.Component {
 
 SearchBook.propTypes = {
   books: PropTypes.array.isRequired,
-  result: PropTypes.array,
+  result: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   handleSearch: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired
 };

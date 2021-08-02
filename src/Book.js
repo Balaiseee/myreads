@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 
 const Book = props => {
   const { book, handleUpdate } = props;
+  const authors = book.authors.join(", ");
   return (
     <div className="book">
       <div className="book-top">
@@ -23,7 +24,7 @@ const Book = props => {
         <UpdateBook book={book} handleUpdate={handleUpdate} />
       </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{book.authors[0]}</div>
+      <div className="book-authors">{authors}</div>
     </div>
   );
 };
